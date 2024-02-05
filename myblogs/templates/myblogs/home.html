@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog - Explore, Learn, Share</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body style="background-image: url(https://images.unsplash.com/photo-1516053256215-94022213b13c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);">
+    <!-- Navbar file loaded -->
+    {% include 'navbar.html' %}  
+    <!-- Carousel start -->
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2500">
+        <style>
+            .carousel-item img {
+                object-fit: cover;
+                @media only screen and (max-width: 600px) {height: 250px;}
+                @media only screen and (min-width: 600px) {height: 495px;}
+            }
+        </style>
+        <div class="carousel-indicators" >
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"  class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block" >
+              <h2 style="background-color: rgb(77, 75, 75); display: inline-block;"> Uncover Your Unique Voice</h2>
+              <p style="background-color: rgb(77, 75, 75);">Develop a distinct writing style that resonates with audience.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h2 style="background-color: rgb(77, 75, 75); display: inline-block;">Craft Compelling Content</h2>
+              <p style="background-color: rgb(77, 75, 75);">Deliver quality and engaging content using a mix of text, images, and multimedia.</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1604933762161-67313106146c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h2 style="background-color: rgb(77, 75, 75); display: inline-block;">Foster a Community</h2>
+              <p style="background-color: rgb(77, 75, 75);">Encourage reader interaction through comments and social media engagement.</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div><br><br>
+    <!-- Carousel end -->
+
+    <!--Blog category starts here-->
+    <div class="container text-center mt-4 mb-4">
+        <h3 class="display-4 text-info">Popular Blog Categories</h3><br>
+        {{ warning }}
+        {% if category %}
+        <div class="d-flex flex-wrap justify-content-evenly">
+            {% for y in category  %}
+            <div class="card mb-4" style="width: 18rem;">
+                <img src="{{ y.blogcat_img.url }}" class="card-img-top" alt="...">
+                <div class="card-body h-100">
+                  <h5 class="card-title">{{ y.blog_cat }}</h5>
+                  <p class="card-text">{{ y.blogcat_description }}</p>
+                  <a href="{% url 'blog' %}?category={{ y.blog_cat }}" class="btn btn-primary" style="background-color: #0066cc; border: none;">Click to view more</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <!--Blog category ends here-->
+
+    <!-- Subscribe begin -->
+    <form class=" alert alert-info container" method="post" action="">
+      {% csrf_token %}
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-auto">
+          <p class="pt-2 form-control">
+            <strong>Sign up for our newsletter</strong>
+          </p>
+        </div>
+        <div class="col-md-5 col-12">
+          <div data-mdb-input-init class="form-outline mb-4">
+            <input type="email" id="subscription_email" name="subscription_email" class="form-control" />
+            <label class="form-label">Email address</label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <button data-mdb-ripple-init type="submit" class="btn btn-success mb-4">
+            Subscribe
+          </button>
+        </div>
+        {% if feedback %}
+        <h1 class=" container text-center alert alert-success mt-2 ">{{ feedback }}</h1>
+        {% endif %}
+      </div>
+    </form>
+    <!-- Subscribe end -->
+
+    <!--Start of Tawk.to Script-->
+      <script type="text/javascript">
+      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+      (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/65b0b2d20ff6374032c41f97/1hkt3l29e';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+      })();
+      </script>
+    <!--End of Tawk.to Script-->
+
+    <!-- footer file loaded -->
+    {% include 'myblogs/footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
